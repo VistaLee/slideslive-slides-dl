@@ -11,7 +11,7 @@ install and run
 ---------------
 
 - `pip3 install -r requirements.txt`
-- `python3 slideslive-slides-dl.py https://slideslive.de/38919334/technical-seo-and-modern-javascript-web-apps`
+- `python slideslive-slides-dl.py --url https://slideslive.com/38968383/reliable-post-hoc-explanations-modeling-uncertainty-in-explainability`
 
 
 help

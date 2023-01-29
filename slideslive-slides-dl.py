@@ -7,6 +7,8 @@ import xml.etree.ElementTree as et
 import time
 
 
+
+
 def parse_xml(xml_file, df_cols):
     """Parse the input XML file and store the result in a pandas
     DataFrame with the given columns.
@@ -46,6 +48,7 @@ def get_video_id(video_url):
 
 def download_save_file(url, save_path, headers, wait_time=0.2):
     r = requests.get(url, headers=headers)
+    r.close()
     with open(save_path, 'wb') as f:
         f.write(r.content)
     time.sleep(wait_time)
@@ -62,7 +65,7 @@ def download_slides_xml(base_xml_url, video_id, video_name, headers, wait_time):
 
     file_path = '{0}/{1}.xml'.format(folder_name, video_id)
     if not os.path.exists(file_path):
-        xml_url = '{0}{1}/{1}.xml'.format(base_xml_url, video_id)
+        xml_url = '{0}{1}/v2/{1}.xml'.format(base_xml_url, video_id)
         print('downloading {}'.format(file_path))
         download_save_file(xml_url, file_path, headers, wait_time)
 
@@ -105,7 +108,9 @@ def create_ffmpeg_concat_file(video_id, video_name, df, size):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('url')
+# parser.add_argument('--url', default='https://slideslive.com/38968383/reliable-post-hoc-explanations-modeling-uncertainty-in-explainability')
+parser.add_argument('--url', default='https://slideslive.com/38967410/improving-blackbox-optimization-in-vae-latent-space-using-decoder-uncertainty')
+
 parser.add_argument('--size', default='big', help='medium or big')
 parser.add_argument('--useragent', default='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/76.0.3809.100 Chrome/76.0.3809.100 Safari/537.36')
 parser.add_argument('--basedataurl', default='https://d2ygwrecguqg66.cloudfront.net/data/presentations/')
